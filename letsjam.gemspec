@@ -1,11 +1,11 @@
 spec = Gem::Specification.new do |s|
-  s.name = 'googlecodejam'
-  s.version = '0.1'
-  s.summary = 'Google Code Jam - Runner Utility for Ruby'
-  s.description = 'Google Code Jam - Runner Utility for Ruby'
-  s.author = ['Endel Dreyer']
-  s.email = ['endel.dreyer@gmail.com']
-  s.homepage = "https://github.com/endel/googlecodejam"
+  s.name = 'letsjam'
+  s.version = '0.2'
+  s.summary = 'Code Competition Utility for Ruby'
+  s.description = 'Code Competition Utility for Ruby'
+  s.author = ['Endel Dreyer', 'Zach Baker']
+  s.email = ['endel.dreyer@gmail.com', 'zach@zachbaker.com']
+  s.homepage = "https://github.com/zach/googlecodejam"
 
   s.files = `git ls-files`.split("\n").select {|f| !f.index('.rb.swp') }
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
