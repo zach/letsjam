@@ -1,1 +1,2 @@
-require 'googlecodejam/runner'
+require 'letsjam/runner'
+require 'letsjam/tester'

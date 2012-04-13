@@ -1,0 +1,54 @@
+#!/usr/bin/ruby
+$: << './lib'
+require 'letsjam/runner'
+require 'letsjam/tester'
+require 'optparse'
+
+options = {}
+opts = OptionParser.new do |opts|
+  opts.banner = <<BANNER
+--------------------------------------------------------------------------------------------------- 
+jamtest - Google Code Jam Testing Utility for Ruby
+Based on https://github.com/endel/googlecodejam
+Usage:
+  jamtest -s src/algorithm_path.rb -i src/sample.in
+--------------------------------------------------------------------------------------------------- 
+BANNER
+  opts.on("-s [path]", "--source [path]", "Path to your problem solving source code.") do |source|
+    options[:source] = source
+  end
+  opts.on("-i [path]", "--input [path]", "Path of the input file ('small.in' or 'large.in' path)") do |input|
+    options[:input] = input
+  end
+  opts.on("-e", "--expected-output [path]", "Path where expected output ([type].expected) file will be read from. [Default: dataset.in => dataset.expected]") do |input|
+    options[:expected_output] = input
+  end
+  opts.on("-t", "--test-output [path]", "Path where scratch testing output ([type].testout) file will be written to. [Default: dataset.in => dataset.testout]") do |output|
+    options[:output] = output
+  end
+  opts.on_tail("-h", "--help", "Show this help message.") do
+    puts opts
+    exit
+  end
+end
+opts.parse!(ARGV)
+
+if options.empty?
+  puts opts
+else
+  if options[:source] && options[:input] 
+    options[:output] = options[:input].gsub('.in', '.testout') if options[:output].nil?
+    options[:expected_output] = options[:input].gsub('.in', '.expected') if options[:expected_output].nil?
+    puts "Running..."
+    time = Time.now
+    LetsJam::Runner.new(options)
+    finish_time = Time.now - time
+    if LetsJam::Tester.compare(options[:expected_output], options[:output])
+      puts "\e[0;32;40mPASSED test in #{finish_time}ms. (See #{options[:output]} for test output)\e[0m"
+    else
+      puts "\e[1;31;40mFAILED test in #{finish_time}ms. (See #{options[:output]} for test output)\e[0m"
+    end
+  else
+    puts "'source' and 'input' options are required. Use --help for details."
+  end
+end

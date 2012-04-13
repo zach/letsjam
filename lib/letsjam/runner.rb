@@ -1,27 +1,40 @@
-module GoogleCodeJam
+# Based on https://github.com/endel/googlecodejam
+module LetsJam
   class Runner
-
     def initialize(options={})
       instance = self.initialize_from_path(options[:source])
 
-      input = open(options[:input]).read
+      test_cases = read(instance, IO.read(options[:input]).split($/))
       options[:output] ||= options[:input].gsub('.in', ".out")
 
-      num, *lines = input.split("\n")
-      output = lines.each_with_index.inject("") do |r, (n, i)|
-        begin
-          r + (i+1==1 ? "" : "\n") + "Case ##{i+1}: #{instance.run(n)}"
-        rescue => e
-          puts e.backtrace
-          raise "Line: #{n.inspect}"
-        end
-      end.strip
+      if test_cases.nil?
+        raise "No test cases read!"
+      else
+        output = test_cases.each_with_index.inject("") do |r, (test_case_data, i)|
+          begin
+            r + (i+1==1 ? "" : "\n") + "Case ##{i+1}: #{instance.run(test_case_data)}"
+          rescue => e
+            puts e.backtrace
+            raise "Line: #{n.inspect}"
+          end
+        end.strip
 
-      File.open(options[:output], 'w+') {|f| f.write(output) }
+        File.open(options[:output], 'w+') {|f| f.write(output) }
+      end
       options
     end
 
     protected
+      def read(instance, input_lines)
+        if instance.respond_to?(:read)
+          # use problem-specific read routine
+          instance.read(input_lines)
+        else
+          # use generic read routine (fine for one-line test cases)
+          input_lines[1..-1]
+        end
+      end
+
       def initialize_from_path(path)
         full_path = File.expand_path(path)
         raise "'#{full_path}' not found." unless require full_path
