@@ -1,10 +1,13 @@
 LetsJam - Code Competition Utility for Ruby
-
 ====
 
-This is a fork of the googlecodejam gem by zach.  It provides a filewatcher-compatible test runner and the ability to customize input reading.
+This is letsjam, a fork of the googlecodejam gem.  I hope to add some features for InterviewStreet to this version after Code Jam.
 
-The original README appears below.
+It provides the ability to customize input reading, and a filewatcher-compatible (https://github.com/thomasfl/filewatcher) test runner.
+
+The original README appears below. Enjoy.
+
+-- Zach.
 
 Google Code Jam - Runner Utility for Ruby
 ====

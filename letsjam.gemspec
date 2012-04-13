@@ -5,7 +5,7 @@ spec = Gem::Specification.new do |s|
   s.description = 'Code Competition Utility for Ruby'
   s.author = ['Endel Dreyer', 'Zach Baker']
   s.email = ['endel.dreyer@gmail.com', 'zach@zachbaker.com']
-  s.homepage = "https://github.com/zach/googlecodejam"
+  s.homepage = "https://github.com/zach/letsjam"
 
   s.files = `git ls-files`.split("\n").select {|f| !f.index('.rb.swp') }
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
