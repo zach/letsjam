@@ -10,12 +10,15 @@ module LetsJam
       if test_cases.nil?
         raise "No test cases read!"
       else
+        # run test method if present and in testing mode (:expected_output option is present)
+        instance.test if options[:expected_output] and instance.respond_to?(:test)
+
         output = test_cases.each_with_index.inject("") do |r, (test_case_data, i)|
           begin
             r + (i+1==1 ? "" : "\n") + "Case ##{i+1}: #{instance.run(test_case_data)}"
           rescue => e
             puts e.backtrace
-            raise "Line: #{n.inspect}"
+            raise "Test case data: #{test_case_data.inspect}"
           end
         end.strip
 
