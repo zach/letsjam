@@ -16,8 +16,8 @@ module LetsJam
         output = test_cases.each_with_index.inject("") do |r, (test_case_data, i)|
           begin
             r + (i+1==1 ? "" : "\n") + "Case ##{i+1}: #{instance.run(test_case_data)}"
-          rescue => e
-            puts e.backtrace
+          rescue
+            p $!, *$@
             raise "Test case data: #{test_case_data.inspect}"
           end
         end.strip
