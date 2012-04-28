@@ -35,8 +35,8 @@ Create a solution class file in the current directory that looks like this:
 
 	# This solution uses the 'letsjam' gem from https://github.com/zach/letsjam
 	class A
-	  def input(lines)
-	    lines[1..-1] # simple input: each line is its own test case as a string
+	  def read(lines)
+	    lines.drop(1) # simple input: each line after the first is a test case as a string
 	  end
 
 	  def run(data)
@@ -76,19 +76,19 @@ There are a few standard tropes to problem input. Here are a few and examples of
 
 1. Test cases of one line each containing a string (as shown above).
 
-	    def input(lines)
+	    def read(lines)
 	      lines.drop(1) # simple input: each line is its own test case as a string
 	    end
 
 2. Test cases of one line each containing only integers
 
-	    def input(lines)
+	    def read(lines)
 	      lines.drop(1).map{|s| s.split.map{|n| n.to_i}} # convert each case line to an array of integers
 	    end
 
 3. Test cases of one line each containing an integer and a string
 
-	    def input(lines)
+	    def read(lines)
 	      lines.drop(1).map do |line| # convert each line after
 	        strs = line.split
 	        [strs[0].to_i, strs[1].to_s]
