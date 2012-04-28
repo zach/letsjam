@@ -72,7 +72,7 @@ Programming competition input is typically plain text, with a first line which d
 
 There are a few standard tropes to problem input. Here are a few and examples of how to handle them (you can start with these if you have a similar format):
 
-[Warning: these have not been tested.]
+[Warning: these are untested examples to provide examples of useful idioms.]
 
 1. Test cases of one line each containing a string (as shown above).
 
@@ -100,11 +100,19 @@ There are a few standard tropes to problem input. Here are a few and examples of
 	    def read(lines)
 	      lines.drop(1).map do |line|
 	        strs = line.split
-	        [strs[0].to_i, strs[1].to_i, strs.drop(2).map(&:to_i)]
+	        [strs[0].to_i, strs[1].to_i, strs.drop(2).map{|x| x.to_i}]
 	      end
 	    end
 
-4. Cases with one line indicating the number of lines to follow
+4. Cases with a pair of lines each, the first containing a fixed number of integers, the second containing a list of floats
+
+	    def read(lines)
+	      lines.drop(1).each_slice(2).map do |lines|
+	        [*lines[0].split.map{|x| x.to_i}, x[1].split.map{|x| x.to_f}]
+	      end
+	    end
+
+5. Cases with one line indicating the number of lines to follow
 
 	    def read(lines)
 	      case_lines = []
@@ -113,7 +121,7 @@ There are a few standard tropes to problem input. Here are a few and examples of
 		  case_lines
 	    end
 
-4. Cases with one line with several numbers, the first indicating the number of lines containing a string to follow
+6. Cases with one line with several numbers, the first indicating the number of lines containing a string to follow
 
 	    def read(lines)
 	      case_data = []
@@ -127,7 +135,7 @@ There are a few standard tropes to problem input. Here are a few and examples of
 		  case_data
 	    end
 
-5. A set of global data followed by a list of cases (here, we put the global data in instance variables)
+7. A set of global data followed by a list of cases (here, we put the global data in instance variables)
 
 	    def read(lines)
 	      @letters, @num_words, @total_cases = lines.first.split.map(&:to_i)
